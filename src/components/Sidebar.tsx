@@ -1,9 +1,22 @@
-import React from 'react';
-import { LayoutDashboard, BookOpen, ClipboardList, FileText, Trophy, AlignCenterVertical as Certificate, User, Users, BarChart3, Settings, X } from 'lucide-react';
-import { cn } from '../utils/cn';
+import React from "react";
+import {
+  LayoutDashboard,
+  BookOpen,
+  ClipboardList,
+  FileText,
+  Trophy,
+  AlignCenterVertical as Certificate,
+  User,
+  Users,
+  BarChart3,
+  Settings,
+  X,
+} from "lucide-react";
+import { cn } from "../utils/cn";
+import { NavLink } from "react-router";
 
 interface SidebarProps {
-  userRole: 'student' | 'instructor' | 'admin';
+  userRole: "student" | "instructor" | "admin";
   currentView: string;
   onViewChange: (view: string) => void;
   isCollapsed: boolean;
@@ -12,55 +25,56 @@ interface SidebarProps {
 
 const menuItems = {
   student: [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'courses', label: 'My Courses', icon: BookOpen },
-    { id: 'quizzes', label: 'Quizzes', icon: ClipboardList },
-    { id: 'assignments', label: 'Assignments', icon: FileText },
-    { id: 'grades', label: 'Grades', icon: Trophy },
-    { id: 'certificates', label: 'Certificates', icon: Certificate },
-    { id: 'profile', label: 'Profile', icon: User },
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "courses", label: "My Courses", icon: BookOpen },
+    { id: "quizzes", label: "Quizzes", icon: ClipboardList },
+    { id: "assignments", label: "Assignments", icon: FileText },
+    { id: "grades", label: "Grades", icon: Trophy },
+    { id: "certificates", label: "Certificates", icon: Certificate },
+    { id: "profile", label: "Profile", icon: User },
   ],
   instructor: [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'courses', label: 'My Courses', icon: BookOpen },
-    { id: 'students', label: 'Students', icon: Users },
-    { id: 'assignments', label: 'Assignments', icon: FileText },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'profile', label: 'Profile', icon: User },
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "courses", label: "My Courses", icon: BookOpen },
+    { id: "students", label: "Students", icon: Users },
+    { id: "assignments", label: "Assignments", icon: FileText },
+    { id: "analytics", label: "Analytics", icon: BarChart3 },
+    { id: "profile", label: "Profile", icon: User },
   ],
   admin: [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'users', label: 'Users', icon: Users },
-    { id: 'courses', label: 'Courses', icon: BookOpen },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'settings', label: 'Settings', icon: Settings },
-  ]
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "users", label: "Users", icon: Users },
+    { id: "courses", label: "Courses", icon: BookOpen },
+    { id: "analytics", label: "Analytics", icon: BarChart3 },
+    { id: "settings", label: "Settings", icon: Settings },
+  ],
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
   userRole,
-  currentView,
-  onViewChange,
   isCollapsed,
-  onToggle
+  onToggle,
 }) => {
   const items = menuItems[userRole];
+
 
   return (
     <>
       {/* Mobile overlay */}
       {!isCollapsed && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={onToggle}
         />
       )}
-      
-      <aside className={cn(
-        "fixed left-0 top-0 h-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-r border-gray-200 dark:border-gray-800 transition-all duration-300 z-50",
-        isCollapsed ? "-translate-x-full lg:w-20" : "w-64",
-        "lg:translate-x-0"
-      )}>
+
+      <aside
+        className={cn(
+          "fixed left-0 top-0 h-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-r border-gray-200 dark:border-gray-800 transition-all duration-300 z-50",
+          isCollapsed ? "-translate-x-full lg:w-20" : "w-64",
+          "lg:translate-x-0"
+        )}
+      >
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 border-b border-gray-200 dark:border-gray-800">
@@ -82,20 +96,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-2">
             {items.map((item) => (
-              <button
+              <NavLink
                 key={item.id}
-                onClick={() => onViewChange(item.id)}
-                className={cn(
-                  "w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800",
-                  currentView === item.id && "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg",
-                  isCollapsed ? "justify-center" : "justify-start"
-                )}
+                to={`/${item.id}`}
+                className={({ isActive }) =>
+                  cn(
+                    "w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800",
+                    isActive &&
+                      "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg",
+                    isCollapsed ? "justify-center" : "justify-start"
+                  )
+                }
               >
-                <item.icon className={cn("h-5 w-5", isCollapsed ? "mx-0" : "mx-0")} />
+                <item.icon
+                  className={cn("h-5 w-5", isCollapsed ? "mx-0" : "mx-0")}
+                />
                 {!isCollapsed && (
                   <span className="font-medium">{item.label}</span>
                 )}
-              </button>
+              </NavLink>
             ))}
           </nav>
 

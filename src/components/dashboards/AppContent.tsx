@@ -5,7 +5,7 @@ import { AdminDashboard } from "./AdminDashboard";
 import { StudentDashboard } from "./StudentDashboard";
 import { Sidebar } from "../Sidebar";
 import { Header } from "../Header";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { Menu } from "lucide-react";
 import { ProfilePage } from "@/pages/ProfilePage";
 
@@ -61,7 +61,8 @@ function AppContent() {
 
         <main className="p-6 lg:p-8">
           <Routes>
-            <Route path="/" element={renderDashboard()} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={renderDashboard()} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </main>
