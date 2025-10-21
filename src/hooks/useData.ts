@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { User, Course, Assignment, Activity, Analytics } from '../types';
+import { User, Course, Activity, Analytics } from '../types';
 
 // Mock data
 const mockUser: User = {

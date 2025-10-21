@@ -42,6 +42,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <TrendingUp className="h-5 w-5" />
                 <span className="font-medium">+{analytics?.monthlyGrowth}% Growth</span>
+                
               </div>
             </div>
           </div>
