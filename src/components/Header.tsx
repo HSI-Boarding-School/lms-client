@@ -1,8 +1,17 @@
-import React from 'react';
-import { Search, Bell, Moon, Sun, Settings } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
-import { Button } from './ui/Button';
-import { useUser } from '../hooks/useData';
+import React from "react";
+import { Search, Bell, Moon, Sun, Settings, LogOut } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
+import { Button } from "./ui/Button";
+import { useUser } from "../hooks/useData";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Link } from "react-router";
 
 export const Header: React.FC = () => {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -24,9 +33,13 @@ export const Header: React.FC = () => {
 
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" onClick={toggleDarkMode}>
-            {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {darkMode ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
           </Button>
-          
+
           <Button variant="ghost" size="sm" className="relative">
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full flex items-center justify-center">
@@ -39,19 +52,25 @@ export const Header: React.FC = () => {
           </Button>
 
           <div className="flex items-center space-x-3 pl-4 border-l border-gray-200 dark:border-gray-700">
-            <img
-              src={user?.avatar}
-              alt={user?.name}
-              className="h-8 w-8 rounded-full object-cover ring-2 ring-blue-500"
-            />
-            <div className="hidden sm:block">
-              <p className="text-sm font-medium text-gray-900 dark:text-white">
-                {user?.name}
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
-                {user?.role}
-              </p>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <img
+                  src={user?.avatar}
+                  alt={user?.name}
+                  className="h-8 w-8 rounded-full object-cover ring-2 ring-blue-500"
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-500 cursor-pointer">
+                  Log out <LogOut />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

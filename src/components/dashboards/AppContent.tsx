@@ -8,6 +8,7 @@ import { Header } from "../Header";
 import { Navigate, Route, Routes } from "react-router";
 import { Menu } from "lucide-react";
 import { ProfilePage } from "@/pages/ProfilePage";
+import { UsersPage } from "@/pages/UsersPage";
 
 function AppContent() {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -64,6 +65,7 @@ function AppContent() {
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={renderDashboard()} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/users" element={<UsersPage />} />
           </Routes>
         </main>
       </div>
