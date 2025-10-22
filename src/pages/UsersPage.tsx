@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card } from "../components/ui/Card";
+import { Card } from "../components/ui/CardPrimary";
 import { Button } from "../components/ui/Button";
 import { User } from "@/types";
 import { cn } from "@/utils/cn";

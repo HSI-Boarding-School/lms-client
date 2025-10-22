@@ -1,19 +1,28 @@
-import React from 'react';
-import { Card } from '../ui/Card';
-import { StatCard } from '../ui/StatCard';
-import { Button } from '../ui/Button';
-import { useCourses, useAnalytics } from '../../hooks/useData';
-import { BookOpen, Users, TrendingUp, Plus, Eye, Edit3, MoreHorizontal } from 'lucide-react';
+import React from "react";
+import { Card } from "../ui/CardPrimary";
+import { StatCard } from "../ui/StatCard";
+import { Button } from "../ui/Button";
+import { useCourses, useAnalytics } from "../../hooks/useData";
+import {
+  BookOpen,
+  Users,
+  TrendingUp,
+  Plus,
+  Eye,
+  Edit3,
+  MoreHorizontal,
+} from "lucide-react";
 
 export const InstructorDashboard: React.FC = () => {
   const { data: courses, isLoading: coursesLoading } = useCourses();
-  const { data: analytics, isLoading: analyticsLoading } = useAnalytics();
+  const { isLoading: analyticsLoading } = useAnalytics();
 
   if (coursesLoading || analyticsLoading) {
     return <div className="p-8">Loading...</div>;
   }
 
-  const totalStudents = courses?.reduce((acc, course) => acc + course.students, 0) || 0;
+  const totalStudents =
+    courses?.reduce((acc, course) => acc + course.students, 0) || 0;
   const pendingSubmissions = 23; // Mock data
 
   return (
@@ -22,13 +31,14 @@ export const InstructorDashboard: React.FC = () => {
       <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-8 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.1%22%3E%3Cpolygon points=%2220 0 40 20 20 40 0 20%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
         <div className="relative z-10">
-          <h1 className="text-4xl font-bold mb-4">
-            Instructor Dashboard 👨‍🏫
-          </h1>
+          <h1 className="text-4xl font-bold mb-4">Instructor Dashboard 👨‍🏫</h1>
           <p className="text-xl opacity-90 mb-6">
             Manage your courses and track student progress
           </p>
-          <Button variant="secondary" className="bg-white/20 hover:bg-white/30 backdrop-blur-sm">
+          <Button
+            variant="secondary"
+            className="bg-white/20 hover:bg-white/30 backdrop-blur-sm"
+          >
             Create New Course
             <Plus className="ml-2 h-5 w-5" />
           </Button>
@@ -76,7 +86,7 @@ export const InstructorDashboard: React.FC = () => {
                 </Button>
               </div>
             </div>
-            
+
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 dark:bg-gray-800">
@@ -97,12 +107,12 @@ export const InstructorDashboard: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                   {courses?.map((course, index) => (
-                    <tr 
-                      key={course.id} 
+                    <tr
+                      key={course.id}
                       className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-200"
                       style={{
                         animationDelay: `${index * 100}ms`,
-                        animation: 'slideUp 0.6s ease-out forwards'
+                        animation: "slideUp 0.6s ease-out forwards",
                       }}
                     >
                       <td className="px-6 py-4">
@@ -161,17 +171,45 @@ export const InstructorDashboard: React.FC = () => {
             </h3>
             <div className="space-y-4">
               {[
-                { name: 'Sarah Chen', action: 'completed assignment', course: 'React Development', time: '2 hours ago', avatar: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop' },
-                { name: 'Mike Johnson', action: 'started quiz', course: 'UI/UX Design', time: '4 hours ago', avatar: 'https://images.pexels.com/photos/1484794/pexels-photo-1484794.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop' },
-                { name: 'Emily Davis', action: 'submitted project', course: 'Data Science', time: '1 day ago', avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop' },
-                { name: 'Alex Wilson', action: 'completed course', course: 'Digital Marketing', time: '2 days ago', avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop' },
+                {
+                  name: "Sarah Chen",
+                  action: "completed assignment",
+                  course: "React Development",
+                  time: "2 hours ago",
+                  avatar:
+                    "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
+                },
+                {
+                  name: "Mike Johnson",
+                  action: "started quiz",
+                  course: "UI/UX Design",
+                  time: "4 hours ago",
+                  avatar:
+                    "https://images.pexels.com/photos/1484794/pexels-photo-1484794.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
+                },
+                {
+                  name: "Emily Davis",
+                  action: "submitted project",
+                  course: "Data Science",
+                  time: "1 day ago",
+                  avatar:
+                    "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
+                },
+                {
+                  name: "Alex Wilson",
+                  action: "completed course",
+                  course: "Digital Marketing",
+                  time: "2 days ago",
+                  avatar:
+                    "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
+                },
               ].map((activity, index) => (
-                <div 
+                <div
                   key={index}
                   className="flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-200"
                   style={{
                     animationDelay: `${index * 100}ms`,
-                    animation: 'fadeIn 0.6s ease-out forwards'
+                    animation: "fadeIn 0.6s ease-out forwards",
                   }}
                 >
                   <img
