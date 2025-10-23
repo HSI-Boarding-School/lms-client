@@ -4,6 +4,11 @@ export interface User {
   email: string;
   avatar: string;
   role: 'student' | 'instructor' | 'admin';
+  status: 'active' | 'inactive' | 'suspended';
+  joinDate: string;
+  lastLogin: string;
+  coursesEnrolled?: number;
+  coursesCreated?: number;
 }
 
 export interface Course {

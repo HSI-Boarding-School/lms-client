@@ -1,9 +1,17 @@
-import React from 'react';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
-import { ProgressBar } from '../ui/ProgressBar';
-import { useCourses, useActivities } from '../../hooks/useData';
-import { Play, Clock, Users, Star, BookOpen, Trophy, Target } from 'lucide-react';
+import React from "react";
+import { Card } from "../../components/ui/CardPrimary";
+import { Button } from "../../components/ui/Button";
+import { ProgressBar } from "../../components/ui/ProgressBar";
+import { useCourses, useActivities } from "../../hooks/useData";
+import {
+  Play,
+  Clock,
+  Users,
+  Star,
+  BookOpen,
+  Trophy,
+  Target,
+} from "lucide-react";
 
 export const StudentDashboard: React.FC = () => {
   const { data: courses, isLoading: coursesLoading } = useCourses();
@@ -13,9 +21,14 @@ export const StudentDashboard: React.FC = () => {
     return <div className="p-8">Loading...</div>;
   }
 
-  const totalProgress = courses ? 
-    Math.round(courses.reduce((acc, course) => acc + course.progress, 0) / courses.length) : 0;
-  const completedCourses = courses?.filter(course => course.progress === 100).length || 0;
+  const totalProgress = courses
+    ? Math.round(
+        courses.reduce((acc, course) => acc + course.progress, 0) /
+          courses.length
+      )
+    : 0;
+  const completedCourses =
+    courses?.filter((course) => course.progress === 100).length || 0;
 
   return (
     <div className="space-y-8">
@@ -23,9 +36,7 @@ export const StudentDashboard: React.FC = () => {
       <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 rounded-3xl p-8 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.1%22%3E%3Ccircle cx=%227%22 cy=%227%22 r=%227%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30" />
         <div className="relative z-10">
-          <h1 className="text-4xl font-bold mb-4">
-            Welcome back, Student! 🎓
-          </h1>
+          <h1 className="text-4xl font-bold mb-4">Welcome back, Student! 🎓</h1>
           <p className="text-xl opacity-90 mb-6">
             Continue your learning journey and achieve your goals
           </p>
@@ -33,19 +44,25 @@ export const StudentDashboard: React.FC = () => {
             <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-2">
               <div className="flex items-center space-x-2">
                 <BookOpen className="h-5 w-5" />
-                <span className="font-medium">{courses?.length || 0} Active Courses</span>
+                <span className="font-medium">
+                  {courses?.length || 0} Active Courses
+                </span>
               </div>
             </div>
             <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-2">
               <div className="flex items-center space-x-2">
                 <Trophy className="h-5 w-5" />
-                <span className="font-medium">{completedCourses} Completed</span>
+                <span className="font-medium">
+                  {completedCourses} Completed
+                </span>
               </div>
             </div>
             <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-2">
               <div className="flex items-center space-x-2">
                 <Target className="h-5 w-5" />
-                <span className="font-medium">{totalProgress}% Overall Progress</span>
+                <span className="font-medium">
+                  {totalProgress}% Overall Progress
+                </span>
               </div>
             </div>
           </div>
@@ -67,12 +84,12 @@ export const StudentDashboard: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {courses?.map((course, index) => (
-              <Card 
-                key={course.id} 
+              <Card
+                key={course.id}
                 className="overflow-hidden group"
                 style={{
                   animationDelay: `${index * 100}ms`,
-                  animation: 'slideUp 0.6s ease-out forwards'
+                  animation: "slideUp 0.6s ease-out forwards",
                 }}
               >
                 <div className="relative h-48 overflow-hidden">
@@ -89,7 +106,9 @@ export const StudentDashboard: React.FC = () => {
                       </span>
                       <div className="flex items-center space-x-1">
                         <Star className="h-4 w-4 fill-current text-yellow-400" />
-                        <span className="text-sm font-medium">{course.rating}</span>
+                        <span className="text-sm font-medium">
+                          {course.rating}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -109,7 +128,7 @@ export const StudentDashboard: React.FC = () => {
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
                     {course.description}
                   </p>
-                  
+
                   <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4 space-x-4">
                     <div className="flex items-center space-x-1">
                       <Clock className="h-4 w-4" />
@@ -145,15 +164,24 @@ export const StudentDashboard: React.FC = () => {
               Quick Actions
             </h3>
             <div className="space-y-3">
-              <Button variant="neumorphic" className="w-full justify-start text-left">
+              <Button
+                variant="neumorphic"
+                className="w-full justify-start text-left"
+              >
                 <BookOpen className="h-5 w-5 mr-3" />
                 Browse Courses
               </Button>
-              <Button variant="neumorphic" className="w-full justify-start text-left">
+              <Button
+                variant="neumorphic"
+                className="w-full justify-start text-left"
+              >
                 <Trophy className="h-5 w-5 mr-3" />
                 View Certificates
               </Button>
-              <Button variant="neumorphic" className="w-full justify-start text-left">
+              <Button
+                variant="neumorphic"
+                className="w-full justify-start text-left"
+              >
                 <Target className="h-5 w-5 mr-3" />
                 Set Goals
               </Button>
@@ -167,18 +195,24 @@ export const StudentDashboard: React.FC = () => {
             </h3>
             <div className="space-y-4">
               {activities?.map((activity, index) => (
-                <div 
-                  key={activity.id} 
+                <div
+                  key={activity.id}
                   className="flex items-start space-x-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-200"
                   style={{
                     animationDelay: `${index * 100}ms`,
-                    animation: 'fadeIn 0.6s ease-out forwards'
+                    animation: "fadeIn 0.6s ease-out forwards",
                   }}
                 >
                   <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center flex-shrink-0">
-                    {activity.type === 'course_completed' && <Trophy className="h-4 w-4 text-white" />}
-                    {activity.type === 'assignment_submitted' && <BookOpen className="h-4 w-4 text-white" />}
-                    {activity.type === 'certificate_earned' && <Trophy className="h-4 w-4 text-white" />}
+                    {activity.type === "course_completed" && (
+                      <Trophy className="h-4 w-4 text-white" />
+                    )}
+                    {activity.type === "assignment_submitted" && (
+                      <BookOpen className="h-4 w-4 text-white" />
+                    )}
+                    {activity.type === "certificate_earned" && (
+                      <Trophy className="h-4 w-4 text-white" />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-gray-900 dark:text-white text-sm">
