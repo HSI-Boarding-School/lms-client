@@ -17,12 +17,12 @@ lms-client/
 │── public/            # Static assets (images, icons, etc.)
 │── src/
 │   │── assets/        # gambar, icon
-|   │── store/         # store zustand
 │   │── components/    # komponen UI reusable
 │   │── pages/         # halaman utama (Dashboard, Login, dll)
 │   │── routes/        # konfigurasi routing
 │   │── hooks/         # custom hooks
 │   │── services/      # API call (axios/fetch)
+|   │── store/         # store zustand
 │   │── App.jsx        # root component
 │   │── main.jsx       # entry point React
 │── package.json
