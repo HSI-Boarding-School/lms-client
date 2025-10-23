@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { InstructorDashboard } from "./InstructorDashboard";
 import { AdminDashboard } from "./AdminDashboard";
 import { StudentDashboard } from "./StudentDashboard";
-import { Sidebar } from "../Sidebar";
-import { Header } from "../Header";
+import { Sidebar } from "../../components/Sidebar";
+import { Header } from "../../components/Header";
 import { Navigate, Route, Routes } from "react-router";
 import { Menu } from "lucide-react";
-import { ProfilePage } from "@/pages/ProfilePage";
-import { UsersPage } from "@/pages/UsersPage";
+import { ProfilePage } from "@/pages/users/ProfilePage";
+import { UsersPage } from "@/pages/users/UsersPage";
 
 function AppContent() {
   const [currentView, setCurrentView] = useState("dashboard");

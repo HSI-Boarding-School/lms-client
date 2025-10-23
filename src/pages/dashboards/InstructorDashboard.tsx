@@ -1,7 +1,7 @@
 import React from "react";
-import { Card } from "../ui/CardPrimary";
-import { StatCard } from "../ui/StatCard";
-import { Button } from "../ui/Button";
+import { Card } from "../../components/ui/CardPrimary";
+import { StatCard } from "../../components/ui/StatCard";
+import { Button } from "../../components/ui/Button";
 import { useCourses, useAnalytics } from "../../hooks/useData";
 import {
   BookOpen,

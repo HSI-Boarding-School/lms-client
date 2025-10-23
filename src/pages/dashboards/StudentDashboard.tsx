@@ -1,7 +1,7 @@
 import React from "react";
-import { Card } from "../ui/CardPrimary";
-import { Button } from "../ui/Button";
-import { ProgressBar } from "../ui/ProgressBar";
+import { Card } from "../../components/ui/CardPrimary";
+import { Button } from "../../components/ui/Button";
+import { ProgressBar } from "../../components/ui/ProgressBar";
 import { useCourses, useActivities } from "../../hooks/useData";
 import {
   Play,

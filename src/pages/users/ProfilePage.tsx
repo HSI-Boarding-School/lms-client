@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Card } from "../components/ui/CardPrimary";
-import { Button } from "../components/ui/Button";
-import { useUser } from "../hooks/useData";
+import { Card } from "../../components/ui/CardPrimary";
+import { Button } from "../../components/ui/Button";
+import { useUser } from "../../hooks/useData";
 import {
   User,
   Mail,
@@ -24,7 +24,7 @@ import {
   Clock,
   Target,
 } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export const ProfilePage: React.FC = () => {
   const { data: user } = useUser();

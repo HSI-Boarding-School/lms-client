@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Card } from "../components/ui/CardPrimary";
-import { Button } from "../components/ui/Button";
+import { Card } from "../../components/ui/CardPrimary";
+import { Button } from "../../components/ui/Button";
 import { User } from "@/types";
 import { cn } from "@/utils/cn";
 import {
@@ -198,7 +198,7 @@ export const UsersPage: React.FC = () => {
       <div className="bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600 rounded-3xl p-8 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2250%22 height=%2250%22 viewBox=%220 0 50 50%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.08%22%3E%3Cpath d=%22M25 0L50 25L25 50L0 25z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30" />
         <div className="relative z-10">
-          <h1 className="text-4xl font-bold mb-4">User Management 👥</h1>
+          <h1 className="text-4xl font-bold mb-4">User Management 👤</h1>
           <p className="text-xl opacity-90 mb-6">
             Manage users, roles, and permissions across the platform
           </p>
