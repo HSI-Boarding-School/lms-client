@@ -9,13 +9,13 @@ import { Navigate, Route, Routes } from "react-router";
 import { Menu } from "lucide-react";
 import { ProfilePage } from "@/pages/users/ProfilePage";
 import { UsersPage } from "@/pages/users/UsersPage";
+import { useUserRoleStore } from "@/store/userStore";
 
 function AppContent() {
   const [currentView, setCurrentView] = useState("dashboard");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [userRole, setUserRole] = useState<"student" | "instructor" | "admin">(
-    "student"
-  );
+  const userRole = useUserRoleStore((state) => state.userRole);
+  const setUserRole = useUserRoleStore((state) => state.setUserRole);
   const { data: user } = useUser();
 
   useEffect(() => {
@@ -68,47 +68,6 @@ function AppContent() {
             <Route path="/users" element={<UsersPage />} />
           </Routes>
         </main>
-      </div>
-
-      {/* Demo Controls */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl p-4 shadow-xl border border-gray-200 dark:border-gray-700">
-          <p className="text-sm font-medium text-gray-900 dark:text-white mb-3">
-            Demo Mode
-          </p>
-          <div className="space-y-2">
-            <button
-              onClick={() => setUserRole("student")}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                userRole === "student"
-                  ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
-                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-              }`}
-            >
-              Student View
-            </button>
-            <button
-              onClick={() => setUserRole("instructor")}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                userRole === "instructor"
-                  ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
-                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-              }`}
-            >
-              Instructor View
-            </button>
-            <button
-              onClick={() => setUserRole("admin")}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                userRole === "admin"
-                  ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
-                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-              }`}
-            >
-              Admin View
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

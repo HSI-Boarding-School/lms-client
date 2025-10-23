@@ -12,10 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Link } from "react-router";
+import { useUserRoleStore } from "@/store/userStore";
 
 export const Header: React.FC = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const { data: user } = useUser();
+  const userRole = useUserRoleStore((state) => state.userRole);
+  const setUserRole = useUserRoleStore((state) => state.setUserRole);
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 px-6 py-4">
@@ -32,6 +35,47 @@ export const Header: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-4">
+          {/* Demo Controls */}
+          <DropdownMenu>
+            <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl py-2 px-3 shadow-xl border border-gray-200 dark:border-gray-700">
+              <DropdownMenuTrigger className="text-sm font-medium text-gray-900 dark:text-white">
+                Mode
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="space-y-2">
+                <DropdownMenuItem
+                  onClick={() => setUserRole("student")}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                    userRole === "student"
+                      ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
+                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  Student View
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setUserRole("instructor")}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                    userRole === "instructor"
+                      ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
+                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  Instructor View
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setUserRole("admin")}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                    userRole === "admin"
+                      ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
+                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  Admin View
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </div>
+          </DropdownMenu>
+
           <Button variant="ghost" size="sm" onClick={toggleDarkMode}>
             {darkMode ? (
               <Sun className="h-5 w-5" />
@@ -47,10 +91,6 @@ export const Header: React.FC = () => {
             </span>
           </Button>
 
-          <Button variant="ghost" size="sm">
-            <Settings className="h-5 w-5" />
-          </Button>
-
           <div className="flex items-center space-x-3 pl-4 border-l border-gray-200 dark:border-gray-700">
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -64,7 +104,9 @@ export const Header: React.FC = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/profile" className="cursor-pointer">Profile</Link>
+                  <Link to="/profile" className="cursor-pointer">
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-red-500 cursor-pointer">
                   Log out <LogOut />
