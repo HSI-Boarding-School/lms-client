@@ -37,10 +37,10 @@ export const InstructorDashboard: React.FC = () => {
           </p>
           <Button
             variant="secondary"
-            className="bg-white/20 hover:bg-white/30 backdrop-blur-sm"
+            className="bg-white/20 flex items-center justify-center text-white hover:bg-white/30 backdrop-blur-sm"
           >
+            <Plus className="mr-2 h-5 w-5" />
             Create New Course
-            <Plus className="ml-2 h-5 w-5" />
           </Button>
         </div>
       </div>
@@ -80,7 +80,7 @@ export const InstructorDashboard: React.FC = () => {
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                   My Courses
                 </h3>
-                <Button variant="primary" size="sm">
+                <Button variant="primary" size="sm" className="flex items-center justify-center text-white">
                   <Plus className="h-4 w-4 mr-2" />
                   Add Course
                 </Button>
