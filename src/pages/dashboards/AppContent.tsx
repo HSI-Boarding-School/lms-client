@@ -22,7 +22,7 @@ function AppContent() {
     if (user) {
       setUserRole(user.role);
     }
-  }, [user]);
+  }, [user, setUserRole]);
 
   const renderDashboard = () => {
     switch (userRole) {

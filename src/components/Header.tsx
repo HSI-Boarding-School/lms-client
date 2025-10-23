@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, Bell, Moon, Sun, Settings, LogOut } from "lucide-react";
+import { Search, Bell, Moon, Sun, LogOut } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { Button } from "./ui/Button";
 import { useUser } from "../hooks/useData";
@@ -44,7 +44,7 @@ export const Header: React.FC = () => {
               <DropdownMenuContent className="space-y-2">
                 <DropdownMenuItem
                   onClick={() => setUserRole("student")}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer ${
                     userRole === "student"
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setUserRole("instructor")}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer ${
                     userRole === "instructor"
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -64,7 +64,7 @@ export const Header: React.FC = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setUserRole("admin")}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer ${
                     userRole === "admin"
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
