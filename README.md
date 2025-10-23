@@ -22,6 +22,7 @@ frontend-lms/
 │── public/            # aset statis (gambar, ikon, dsb)
 │── src/
 │   │── assets/        # gambar, icon
+|   │── store/         # store zustand
 │   │── components/    # komponen UI reusable
 │   │── pages/         # halaman utama (Dashboard, Login, dll)
 │   │── routes/        # konfigurasi routing
