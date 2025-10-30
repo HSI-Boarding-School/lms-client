@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const API_BASE_URL = 'http://127.0.0.1:3000/api';
 
@@ -42,6 +42,26 @@ api.interceptors.response.use(
         }
         return Promise.reject(error);
     }
+)
+
+api.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error: AxiosError) => {
+        // expired token or invalid token
+        if (error.response?.status === 401) {
+            // clear storage
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+        }
+
+        // redirect to login page (check if not already there)
+        if (!window.location.pathname.includes('/login')) {
+            window.location.href = '/login';
+        }
+    }
+
 )
 
 export default api;

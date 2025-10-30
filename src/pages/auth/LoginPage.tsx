@@ -10,27 +10,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link, useNavigate } from "react-router";
-import authService from "@/services/authService";
+import { Link } from "react-router";
 import { useAuthStore } from "@/store/authStore";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const { login, isLoading, error} = useAuthStore();
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     try {
-      const response = await authService.login({email, password});
-      const token = response.data.token;
-      useAuthStore.getState().login(token);
-      navigate("/");
-    } catch (error) {
-      console.error("Login failed:", error);
-      alert("Login failed. Please check your credentials and try again.");
+      await login({email, password})
+      // if succes, redirect to dashboard
+      window.location.href = "/dashboard"
+    } catch (err) {
+      console.error("Login failed", err)
     }
-  };
+  }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-purple-600 via-blue-600 to-blue-500">
@@ -111,11 +110,15 @@ export default function LoginPage() {
             </div>
 
             <Button
-              onClick={() => handleLogin(email, password)}
+              onClick={handleLogin}
+              disabled={isLoading}
+              type="submit"
               className="w-full h-11 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium shadow-lg"
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </Button>
+
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">

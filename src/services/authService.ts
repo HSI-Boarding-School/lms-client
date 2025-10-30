@@ -1,4 +1,6 @@
+import { jwtDecode } from "jwt-decode";
 import api from "./api";
+import { TokenPayload } from "@/store/authStore";
 
 // interface untuk type safety
 export interface LoginCredentials {
@@ -40,8 +42,8 @@ export interface UserData {
     name:       string;
     email:      string;
     is_active:  boolean;
-    created_at: Date;
-    updated_at: Date;
+    created_at: string;
+    updated_at: string;
     roles:      Role[];
 }
 
@@ -49,8 +51,8 @@ export interface Role {
     id:          string;
     name:        string;
     description: string;
-    created_at:  Date;
-    updated_at:  Date;
+    created_at:  string;
+    updated_at:  string;
 }
 
 // Service functions for authentication
@@ -58,24 +60,60 @@ export interface Role {
 const authService = {
     //login
     login: async (credentials: LoginCredentials): Promise<LoginResponse> => {
-        const response = await api.post<LoginResponse>('/auth/login', credentials);
-        return response.data;
+        try {
+            const response = await api.post<LoginResponse>('/auth/login', credentials);
+            return response.data;
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message || 'Login failed');
+        }
     },
 
     // register
     register: async (data: RegisterCredentials): Promise<void> => {
-        await api.post('/auth/register', data);
+        try {
+            await api.post('/auth/register', data);
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message || 'Registration failed');
+        }
     },
 
-    // Get current user profile
+    // Get user by id
     getUserById: async (userId: string): Promise<UserData> => {
-        const response = await api.get<{status: number, data: UserData}>(`/users/${userId}`);
+        const token = localStorage.getItem('token')
+        try {
+            const response = await api.get<{status: number, data: UserData}>(`/users/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        return response.data.data;
+        } catch (error: any) {
+            throw new Error(error.response?.data?.message || 'Failed to fetch user data');
+        }
+    },
+
+    // get current user
+    getCurrentUser: async (): Promise<UserData> => {
+        const token = localStorage.getItem('token')
+        if (!token) throw new Error("No token found")
+
+        const decoded = jwtDecode<TokenPayload>(token)
+        const userId = decoded.user_id
+
+        const response = await api.get(`/users/${userId}`)
         return response.data.data;
     },
 
     logout: async (): Promise<void> => {
-        // Hapus token dari localStorage
-        localStorage.removeItem('token');
+        try {
+            // delete token from localStorage
+        await api.post('/auth/logout');
+        } catch (error: any) {
+            throw new Error('Logout failed');
+        } finally {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+        }
     }
 }
 
