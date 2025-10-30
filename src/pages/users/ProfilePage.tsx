@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../../components/ui/CardPrimary";
 import { Button } from "../../components/ui/Button";
 import { useUser } from "../../hooks/useData";
@@ -25,8 +25,16 @@ import {
   Target,
 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import { useAuthStore } from "@/store/authStore";
 
 export const ProfilePage: React.FC = () => {
+
+  const {user: userDataById, fetchUser} = useAuthStore();
+
+  useEffect(() => {
+    fetchUser();
+  }, [])
+
   const { data: user } = useUser();
   const { darkMode, toggleDarkMode } = useTheme();
   const [isEditing, setIsEditing] = useState(false);
@@ -147,11 +155,11 @@ export const ProfilePage: React.FC = () => {
                 </button>
               </div>
               <div>
-                <h1 className="text-3xl font-bold mb-2">{user?.name}</h1>
-                <p className="text-xl opacity-90 mb-1 capitalize">
-                  {user?.role}
+                <h1 className="text-3xl font-bold mb-2 capitalize">{userDataById?.name}</h1>
+                <p className="text-xl opacity-90 font-bold mb-1 capitalize">
+                  {userDataById?.roles.map(r => r.name).join(", ")}
                 </p>
-                <p className="opacity-75">{formData.location}</p>
+                <p className="opacity-75">{userDataById?.email}</p>
               </div>
             </div>
             <Button
@@ -245,8 +253,8 @@ export const ProfilePage: React.FC = () => {
                       ) : (
                         <div className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
                           <User className="h-5 w-5 text-gray-400" />
-                          <span className="text-gray-900 dark:text-white">
-                            {formData.name}
+                          <span className="text-gray-900 dark:text-white capitalize">
+                            {userDataById?.name}
                           </span>
                         </div>
                       )}
@@ -269,7 +277,7 @@ export const ProfilePage: React.FC = () => {
                         <div className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
                           <Mail className="h-5 w-5 text-gray-400" />
                           <span className="text-gray-900 dark:text-white">
-                            {formData.email}
+                            {userDataById?.email}
                           </span>
                         </div>
                       )}

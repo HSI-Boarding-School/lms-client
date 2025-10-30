@@ -10,15 +10,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import authService from "@/services/authService";
+import { useAuthStore } from "@/store/authStore";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    console.log("Login attempt:", { email, password });
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const response = await authService.login({email, password});
+      const token = response.data.token;
+      useAuthStore.getState().login(token);
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed. Please check your credentials and try again.");
+    }
   };
 
   return (
@@ -27,7 +38,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md mx-4 shadow-2xl">
         <CardHeader className="space-y-1 pb-4">
           <img
-            src="../../public/logo.webp"
+            src="/logo.webp"
             className="w-16 h-16 object-contain mx-auto"
             alt=""
           />
@@ -100,7 +111,7 @@ export default function LoginPage() {
             </div>
 
             <Button
-              onClick={handleSubmit}
+              onClick={() => handleLogin(email, password)}
               className="w-full h-11 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium shadow-lg"
             >
               Sign In

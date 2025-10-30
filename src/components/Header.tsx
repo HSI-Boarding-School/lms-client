@@ -13,12 +13,18 @@ import {
 } from "./ui/dropdown-menu";
 import { Link } from "react-router";
 import { useUserRoleStore } from "@/store/userStore";
+import authService from "@/services/authService";
 
 export const Header: React.FC = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const { data: user } = useUser();
   const userRole = useUserRoleStore((state) => state.userRole);
   const setUserRole = useUserRoleStore((state) => state.setUserRole);
+
+  const handleLogout = async () => {
+    await authService.logout();
+    window.location.href = "/login";
+  }
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 px-6 py-4">
@@ -108,7 +114,7 @@ export const Header: React.FC = () => {
                     Profile
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-500 cursor-pointer">
+                <DropdownMenuItem onClick={handleLogout} className="text-red-500 cursor-pointer">
                   Log out <LogOut />
                 </DropdownMenuItem>
               </DropdownMenuContent>

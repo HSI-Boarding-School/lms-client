@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://127.0.0.1:3000';
+const API_BASE_URL = 'http://127.0.0.1:3000/api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -10,17 +10,15 @@ const api = axios.create({
     timeout: 10000,
 })  
 
-// Interceptor untuk menambahkan token ke setiap request
+// Interceptor to add Authorization header to each request
 api.interceptors.request.use(
     (config) => {
-        // Ambil token dari localStorage
+        // Get token from localStorage
         const token = localStorage.getItem('token');
-
-        // Kalau ada token, tambahkan ke header Authorization
+        // if token exists, add it to headers
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
-
         return config;
     }, 
     (error) => {
@@ -28,18 +26,18 @@ api.interceptors.request.use(
     }
 );
 
-// Interceptor untuk menangani response error
+// Interceptor to handle error responses globally
 api.interceptors.response.use(
     (response) => {
-        // kalau sukses, langsung return response
+        // if response is successful, return it
         return response;
     },
     (error) => {
-        // Kalau 401 Unauthorized, (token invalid/expired)
+        // If 401 Unauthorized, (token invalid/expired)
         if(error.response?.status === 401) {
-            // Hapus token dari localStorage
+            // delete token from localStorage
             localStorage.removeItem('token');
-            // Redirect ke halaman login
+            // Redirect to login page
             window.location.href = '/login';
         }
         return Promise.reject(error);

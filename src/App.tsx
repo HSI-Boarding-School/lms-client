@@ -4,8 +4,16 @@ import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
+import { useAuthStore } from "./store/authStore";
+import { useEffect } from "react";
 
 function App() {
+
+  const loadUserFromStorage = useAuthStore((s) => s.loadUserFromStorage);
+
+  useEffect(() => {
+    loadUserFromStorage();
+  }, [loadUserFromStorage]);
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
