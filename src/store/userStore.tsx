@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 // mendefinisikan tipe role
-type Role = "student" | "instructor" | "admin";
+export type Role = "student" | "instructor" | "admin";
 
 // bentuk data global
 interface UserRoleStore {
