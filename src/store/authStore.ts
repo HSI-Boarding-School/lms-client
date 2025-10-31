@@ -33,8 +33,10 @@ interface AuthState {
     logout: () => void;
     checkAuth: () => Promise<void>;
     clearError: () => void;
+    resetAuth: () => void;
     hasRole: (roles: string | string[]) => boolean;
     setLoading: (loading: boolean) => void;
+    setAuthenticated: (value: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -101,6 +103,8 @@ export const useAuthStore = create<AuthState>()(
                 localStorage.removeItem('user')
             },
 
+            setAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
+
             // check auth (validate token)
             checkAuth: async () => {
                 set({isLoading: true})
@@ -143,6 +147,17 @@ export const useAuthStore = create<AuthState>()(
             clearError: () => {
                 set({error: null})
             }, 
+
+            resetAuth: () => {
+             set({
+                user: null,
+                token: null,
+                isAuthenticated: false,
+                isLoading: false,
+                error: null,
+            });
+                useAuthStore.persist.clearStorage();
+            },
 
             // check if user has a specific role(s)
             hasRole: (roles: string | string[]): boolean => {

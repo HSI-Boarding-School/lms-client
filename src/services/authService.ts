@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import api from "./api";
-import { TokenPayload } from "@/store/authStore";
+import { TokenPayload, useAuthStore } from "@/store/authStore";
 
 // interface untuk type safety
 export interface LoginCredentials {
@@ -46,6 +46,9 @@ export interface UserData {
     updated_at: string;
     roles:      Role[];
 }
+
+export type UserRole = "student" | "instructor" | "admin";
+
 
 export interface Role {
     id:          string;
@@ -111,8 +114,9 @@ const authService = {
         } catch (error: any) {
             throw new Error('Logout failed');
         } finally {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            const { resetAuth } = useAuthStore.getState()
+            resetAuth()
+            localStorage.clear()
         }
     }
 }

@@ -4,6 +4,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
+import ForbiddenPage from "./pages/auth/ForbiddenPage";
 // import { useAuthStore } from "./store/authStore";
 // import { useEffect } from "react";
 
@@ -20,6 +21,8 @@ function App() {
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/403" element={<ForbiddenPage />} />
+
 
       <Route path="/*" element={<AppContent />} />
     </Routes>

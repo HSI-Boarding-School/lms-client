@@ -47,7 +47,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children, allowedRoles})
 
         // check if user has any of the allowed roles
         const hasRequiredRole = allowedRoles.some((allowedRole) => {
-            userRoleNames.includes(allowedRole)
+            return userRoleNames.includes(allowedRole)
         })
 
         if (!hasRequiredRole) {
@@ -55,12 +55,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children, allowedRoles})
                 userRoles: userRoleNames,
                 requiredRoles: allowedRoles
             })
-            return <Navigate to="/login"/>
+            return <Navigate to="/403"/>
         }
 
         console.log("Acces granted!")
     }
-
     return <>{children}</>
 
 }

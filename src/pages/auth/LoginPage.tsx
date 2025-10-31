@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
@@ -10,26 +10,47 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "@/store/authStore";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
+  const [localError, setLocalError] = useState("")
   const [password, setPassword] = useState("");
-  const { login, isLoading, error} = useAuthStore();
+  const navigate = useNavigate();
+  const { login, isLoading, error, isAuthenticated, clearError} = useAuthStore()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  // redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard')
+    }
+  }, [isAuthenticated, navigate])
+
+  // clear error when components unmount 
+  useEffect(() => {
+    return () => {
+      clearError()
+    }
+  }, [clearError])
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLocalError('');
+    clearError()
 
     try {
       await login({email, password})
       // if succes, redirect to dashboard
-      window.location.href = "/dashboard"
+      navigate('/dashboard')
     } catch (err) {
       console.error("Login failed", err)
     }
   }
+
+  const displayError = localError || error
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-purple-600 via-blue-600 to-blue-500">
@@ -49,7 +70,12 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {displayError && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              {displayError}
+            </div>
+          )}
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
               <Input
@@ -59,6 +85,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-11"
+                disabled={isLoading}
               />
             </div>
 
@@ -80,6 +107,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="h-11 pr-10"
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
@@ -110,7 +138,6 @@ export default function LoginPage() {
             </div>
 
             <Button
-              onClick={handleLogin}
               disabled={isLoading}
               type="submit"
               className="w-full h-11 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium shadow-lg"
@@ -182,7 +209,7 @@ export default function LoginPage() {
                 Sign up
               </Link>
             </p>
-          </div>
+          </form>
         </CardContent>
       </Card>
 

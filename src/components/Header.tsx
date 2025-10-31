@@ -11,19 +11,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useUserRoleStore } from "@/store/userStore";
 import authService from "@/services/authService";
+import { UserRole } from "@/services/authService";
 
 export const Header: React.FC = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const { data: user } = useUser();
   const userRole = useUserRoleStore((state) => state.userRole);
+  
   const setUserRole = useUserRoleStore((state) => state.setUserRole);
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
     await authService.logout();
-    window.location.href = "/login";
+    navigate('/login')
   }
 
   return (
@@ -39,10 +42,9 @@ export const Header: React.FC = () => {
             />
           </div>
         </div>
-
-        <div className="flex items-center space-x-4">
-          {/* Demo Controls */}
-          <DropdownMenu>
+<div className="flex items-center space-x-4">
+          {userRole === "admin" as UserRole && (
+        <DropdownMenu>
             <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl py-2 px-3 shadow-xl border border-gray-200 dark:border-gray-700">
               <DropdownMenuTrigger className="text-sm font-medium text-gray-900 dark:text-white">
                 Mode
@@ -81,8 +83,9 @@ export const Header: React.FC = () => {
               </DropdownMenuContent>
             </div>
           </DropdownMenu>
+        )}
 
-          <Button variant="ghost" size="sm" onClick={toggleDarkMode}>
+        <Button variant="ghost" size="sm" onClick={toggleDarkMode}>
             {darkMode ? (
               <Sun className="h-5 w-5" />
             ) : (
@@ -121,6 +124,7 @@ export const Header: React.FC = () => {
             </DropdownMenu>
           </div>
         </div>
+        
       </div>
     </header>
   );
