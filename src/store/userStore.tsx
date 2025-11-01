@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 // mendefinisikan tipe role
-export type Role = "student" | "instructor" | "admin";
+export type Role = "STUDENT" | "INSTRUCTOR" | "ADMIN";
 
 // bentuk data global
 interface UserRoleStore {
@@ -11,6 +11,6 @@ interface UserRoleStore {
 
 // bikin store-nya
 export const useUserRoleStore = create<UserRoleStore>((set) => ({
-  userRole: "student",
+  userRole: "STUDENT" as Role,
   setUserRole: (role: Role) => set({ userRole: role }),
 }));    

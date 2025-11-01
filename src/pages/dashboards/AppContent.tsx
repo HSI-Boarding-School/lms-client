@@ -10,6 +10,7 @@ import { Menu } from "lucide-react";
 import { ProfilePage } from "@/pages/users/ProfilePage";
 import { UsersPage } from "@/pages/users/UsersPage";
 import { useUserRoleStore } from "@/store/userStore";
+import { useAuthStore } from "@/store/authStore";
 
 function AppContent() {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -17,6 +18,7 @@ function AppContent() {
   const userRole = useUserRoleStore((state) => state.userRole);
   const setUserRole = useUserRoleStore((state) => state.setUserRole);
   const { data: user } = useUser();
+  const {getRole} = useAuthStore.getState()
 
   useEffect(() => {
     if (user) {
@@ -24,21 +26,26 @@ function AppContent() {
     }
   }, [user, setUserRole]);
 
+  const role = getRole()
   const renderDashboard = () => {
-    switch (userRole) {
-      case "instructor":
+    switch (role) {
+      case "INSTRUCTOR":
         return <InstructorDashboard />;
-      case "admin":
+      case "ADMIN":
         return <AdminDashboard />;
       default:
         return <StudentDashboard />;
     }
   };
 
+  console.log("decoded roles:", role   );
+
+
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Sidebar
-        userRole={userRole}
+        role={role}
         currentView={currentView}
         onViewChange={setCurrentView}
         isCollapsed={sidebarCollapsed}

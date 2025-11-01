@@ -35,6 +35,7 @@ interface AuthState {
     clearError: () => void;
     resetAuth: () => void;
     hasRole: (roles: string | string[]) => boolean;
+    getRole: () => string;
     setLoading: (loading: boolean) => void;
     setAuthenticated: (value: boolean) => void;
 }
@@ -157,6 +158,17 @@ export const useAuthStore = create<AuthState>()(
                 error: null,
             });
                 useAuthStore.persist.clearStorage();
+            },
+
+            getRole: () => {
+                const token = localStorage.getItem('token')
+                if (!token) {
+                    throw new Error("Token is missing");
+                    }
+                const decoded = jwtDecode<TokenPayload>(token)
+                const userRole = decoded.roles?.[0]?.name || "student"
+
+                return userRole;
             },
 
             // check if user has a specific role(s)

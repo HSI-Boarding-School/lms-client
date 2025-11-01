@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import api from "./api";
 import { TokenPayload, useAuthStore } from "@/store/authStore";
+import { promises } from "dns";
 
 // interface untuk type safety
 export interface LoginCredentials {
@@ -47,7 +48,7 @@ export interface UserData {
     roles:      Role[];
 }
 
-export type UserRole = "student" | "instructor" | "admin";
+export type UserRole = "STUDENT" | "INSTURCTOR" | "ADMIN";
 
 
 export interface Role {

@@ -43,7 +43,7 @@ export const Header: React.FC = () => {
           </div>
         </div>
 <div className="flex items-center space-x-4">
-          {userRole === "admin" as UserRole && (
+          {/* {userRole === "ADMIN" as UserRole && (
         <DropdownMenu>
             <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl py-2 px-3 shadow-xl border border-gray-200 dark:border-gray-700">
               <DropdownMenuTrigger className="text-sm font-medium text-gray-900 dark:text-white">
@@ -51,9 +51,9 @@ export const Header: React.FC = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="space-y-2">
                 <DropdownMenuItem
-                  onClick={() => setUserRole("student")}
+                  onClick={() => setUserRole("STUDENT")}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer ${
-                    userRole === "student"
+                    userRole === "STUDENT"
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
@@ -61,9 +61,9 @@ export const Header: React.FC = () => {
                   Student View
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => setUserRole("instructor")}
+                  onClick={() => setUserRole("INSTRUCTOR")}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer ${
-                    userRole === "instructor"
+                    userRole === "INSTRUCTOR"
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
@@ -71,9 +71,9 @@ export const Header: React.FC = () => {
                   Instructor View
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => setUserRole("admin")}
+                  onClick={() => setUserRole("ADMIN")}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer ${
-                    userRole === "admin"
+                    userRole === "ADMIN"
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
@@ -83,7 +83,7 @@ export const Header: React.FC = () => {
               </DropdownMenuContent>
             </div>
           </DropdownMenu>
-        )}
+        )} */}
 
         <Button variant="ghost" size="sm" onClick={toggleDarkMode}>
             {darkMode ? (

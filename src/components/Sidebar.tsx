@@ -14,17 +14,22 @@ import {
 } from "lucide-react";
 import { cn } from "../utils/cn";
 import { NavLink } from "react-router";
+import { useAuthStore } from "@/store/authStore";
+import { Role } from "@/store/userStore";
+const {getRole} = useAuthStore.getState()
+const role = getRole()
 
 interface SidebarProps {
-  userRole: "student" | "instructor" | "admin";
+  role: string
   currentView: string;
   onViewChange: (view: string) => void;
   isCollapsed: boolean;
   onToggle: () => void;
 }
 
+
 const menuItems = {
-  student: [
+  STUDENT: [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "courses", label: "My Courses", icon: BookOpen },
     { id: "quizzes", label: "Quizzes", icon: ClipboardList },
@@ -33,7 +38,7 @@ const menuItems = {
     { id: "certificates", label: "Certificates", icon: Certificate },
     { id: "profile", label: "Profile", icon: User },
   ],
-  instructor: [
+  INSTRUCTOR: [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "courses", label: "My Courses", icon: BookOpen },
     { id: "students", label: "Students", icon: Users },
@@ -41,7 +46,7 @@ const menuItems = {
     { id: "analytics", label: "Analytics", icon: BarChart3 },
     { id: "profile", label: "Profile", icon: User },
   ],
-  admin: [
+  ADMIN: [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "users", label: "Users", icon: Users },
     { id: "courses", label: "Courses", icon: BookOpen },
@@ -51,11 +56,10 @@ const menuItems = {
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
-  userRole,
   isCollapsed,
   onToggle,
 }) => {
-  const items = menuItems[userRole];
+  const items = menuItems[role as Role]
 
   return (
     <>
@@ -132,7 +136,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     Welcome back!
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
-                    {userRole} Dashboard
+                    {role} Dashboard
                   </p>
                 </div>
               </div>

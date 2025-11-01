@@ -168,21 +168,21 @@ export const StudentDashboard: React.FC = () => {
             <div className="space-y-3">
               <Button
                 variant="neumorphic"
-                className="w-full justify-start text-left"
+                className="flex items-center w-full justify-start text-left"
               >
                 <BookOpen className="h-5 w-5 mr-3" />
                 Browse Courses
               </Button>
               <Button
                 variant="neumorphic"
-                className="w-full justify-start text-left"
+                className="w-full flex items-center justify-start text-left"
               >
                 <Trophy className="h-5 w-5 mr-3" />
                 View Certificates
               </Button>
               <Button
                 variant="neumorphic"
-                className="w-full justify-start text-left"
+                className="w-full flex items-center justify-start text-left"
               >
                 <Target className="h-5 w-5 mr-3" />
                 Set Goals
