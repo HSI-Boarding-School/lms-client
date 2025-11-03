@@ -16,8 +16,6 @@ import { cn } from "../utils/cn";
 import { NavLink } from "react-router";
 import { useAuthStore } from "@/store/authStore";
 import { Role } from "@/store/userStore";
-const {getRole} = useAuthStore.getState()
-const role = getRole()
 
 interface SidebarProps {
   role: string
@@ -59,7 +57,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isCollapsed,
   onToggle,
 }) => {
+  const {getRole} = useAuthStore.getState()
+  const role = getRole()
   const items = menuItems[role as Role]
+  
 
   return (
     <>

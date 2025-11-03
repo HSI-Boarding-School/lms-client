@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, CheckCircle2 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import authService from "@/services/authService";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,8 +21,12 @@ export default function SignUpPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "student",
+    role: "student" as "student" | "instructor" | "admin",
   });
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [isSucces, setIsSucces] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -30,8 +35,47 @@ export default function SignUpPage() {
     });
   };
 
-  const handleSubmit = () => {
-    console.log("Sign up attempt:", formData);
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError("");
+
+    // validation
+    if (!formData.fullName || !formData.email || !formData.password) {
+      setError("Please fill in all fields")
+      return
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Password do not match")
+      return
+    }
+
+    setIsLoading(true);
+
+    try {
+      await authService.register({
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+        username: formData.fullName
+      })
+
+      console.log("Registration succesfully!")
+
+      setIsSucces(true)
+
+      // redirect to login after 2 seconds
+      setTimeout(() => {
+        navigate("/login", {
+          state: {message: "Account created sucessfully! Please login"}
+        })
+      }, 2000);
+    } catch (err: any) {
+      console.error("Registration failed!", err.message)
+      setError(err.message || "Registration failed, please try again")
+    } finally {
+      setIsLoading(false)
+    }
   };
 
   const passwordStrength = (password: string) => {
@@ -63,7 +107,7 @@ export default function SignUpPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <form onClick={handleRegister} className="space-y-4">
             {/* Full Name */}
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name</Label>
@@ -237,7 +281,7 @@ export default function SignUpPage() {
             </div>
 
             <Button
-              onClick={handleSubmit}
+              onClick={handleRegister}
               className="w-full h-11 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium shadow-lg"
             >
               Create Account
@@ -305,7 +349,7 @@ export default function SignUpPage() {
                 Sign in
               </Link>
             </p>
-          </div>
+          </form>
         </CardContent>
       </Card>
 

@@ -15,7 +15,6 @@ import { useAuthStore } from "@/store/authStore";
 function AppContent() {
   const [currentView, setCurrentView] = useState("dashboard");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const userRole = useUserRoleStore((state) => state.userRole);
   const setUserRole = useUserRoleStore((state) => state.setUserRole);
   const { data: user } = useUser();
   const {getRole} = useAuthStore.getState()

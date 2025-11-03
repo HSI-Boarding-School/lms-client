@@ -12,16 +12,12 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Link, useNavigate } from "react-router";
-import { useUserRoleStore } from "@/store/userStore";
 import authService from "@/services/authService";
-import { UserRole } from "@/services/authService";
 
 export const Header: React.FC = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const { data: user } = useUser();
-  const userRole = useUserRoleStore((state) => state.userRole);
   
-  const setUserRole = useUserRoleStore((state) => state.setUserRole);
   const navigate = useNavigate()
 
   const handleLogout = async () => {
