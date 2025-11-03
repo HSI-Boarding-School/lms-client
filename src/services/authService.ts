@@ -12,14 +12,13 @@ export interface RegisterCredentials {
     username: string;
     email: string;
     password: string;
-    role: 'student' | 'instructor' | 'admin';
 }
 
 export interface User {
     id: number;
     username: string;
     email: string;
-    role: 'student' | 'instructor' | 'admin'
+    role: 'STUDENT' | 'INSTRUCTOR' | 'ADMIN';
 }
 
 export interface LoginResponse {
@@ -78,6 +77,7 @@ const authService = {
         } catch (error: any) {
             throw new Error(error.response?.data?.message || 'Registration failed');
         }
+        console.log(data)
     },
 
     // Get user by id

@@ -21,7 +21,6 @@ export default function SignUpPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "student" as "student" | "instructor" | "admin",
   });
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -56,7 +55,6 @@ export default function SignUpPage() {
       await authService.register({
         email: formData.email,
         password: formData.password,
-        role: formData.role,
         username: formData.fullName
       })
 
@@ -136,36 +134,7 @@ export default function SignUpPage() {
               />
             </div>
 
-            {/* Role Selection */}
-            <div className="space-y-2">
-              <Label htmlFor="role">I am a</Label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, role: "student" })}
-                  className={`h-11 rounded-md border-2 font-medium transition-all ${
-                    formData.role === "student"
-                      ? "border-blue-600 bg-blue-50 text-blue-600"
-                      : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
-                  }`}
-                >
-                  🎓 Student
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setFormData({ ...formData, role: "instructor" })
-                  }
-                  className={`h-11 rounded-md border-2 font-medium transition-all ${
-                    formData.role === "instructor"
-                      ? "border-blue-600 bg-blue-50 text-blue-600"
-                      : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
-                  }`}
-                >
-                  👨‍🏫 Instructor
-                </button>
-              </div>
-            </div>
+
 
             {/* Password */}
             <div className="space-y-2">
