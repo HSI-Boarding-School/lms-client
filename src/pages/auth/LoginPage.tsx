@@ -3,8 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
-import { loginSchema } from "@/validators/authSchemas";
-
 import {
   Card,
   CardContent,
@@ -18,40 +16,31 @@ import { useAuthStore } from "@/store/authStore";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
-  const [localError, setLocalError] = useState('')
+  const [localError, setLocalError] = useState("")
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login, isLoading, error, clearError} = useAuthStore()
+
 
   // clear error when components unmount 
   useEffect(() => {
     return () => {
       clearError()
     }
-  }, [clearError])
+  }, [clearError])  
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLocalError('');
     clearError()
 
-    const result = loginSchema.safeParse({email, password})
-
     try {
-      if (!result.success) {
-        setLocalError(result.error.issues.map(issue => issue.message).join(", "))
-        return
-      } else {
-        // if succes, redirect to dashboard
-        navigate('/dashboard')
-        await login({email, password})
-      }
-    } catch (err: any) {
-      if (err.response.data.message) {
-        setLocalError(err.response.data.message)
-      } else {
-        setLocalError('Login failed, please try again later')
-      }
+      await login({email, password})
+      // if succes, redirect to dashboard
+      navigate('/dashboard')
+    } catch (err) {
+      console.error("Login failed", err)
     }
   }
 
