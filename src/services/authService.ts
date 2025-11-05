@@ -77,7 +77,6 @@ const authService = {
         } catch (error: any) {
             throw new Error(error.response?.data?.message || 'Registration failed');
         }
-        console.log(data)
     },
 
     // Get user by id
