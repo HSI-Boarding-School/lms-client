@@ -1,9 +1,8 @@
-# 🎓 LMS Frontend
+# 🎓 Shiners LMS Client
 
-Ini adalah **Frontend Project** untuk aplikasi Learning Management System (LMS).  
-Dibangun menggunakan **React + Vite** dengan fokus pada tampilan **modern, responsive, dan mudah digunakan**.
+**Shiners LMS** is the frontend project of a **Learning Management System** (LMS). Built with **React + Vite**, this project prioritizes a **modern, responsive, and intuitive** user experience for students, instructors, and administrators alike.
 
----
+***
 
 ## 🚀 Tech Stack
 
@@ -13,13 +12,9 @@ Dibangun menggunakan **React + Vite** dengan fokus pada tampilan **modern, respo
 ![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)
 
----
-
-## 📂 Struktur Folder
-
 ```
-frontend-lms/
-│── public/            # aset statis (gambar, ikon, dsb)
+lms-client/
+│── public/            # Static assets (images, icons, etc.)
 │── src/
 │   │── assets/        # gambar, icon
 │   │── components/    # komponen UI reusable
@@ -27,6 +22,7 @@ frontend-lms/
 │   │── routes/        # konfigurasi routing
 │   │── hooks/         # custom hooks
 │   │── services/      # API call (axios/fetch)
+|   │── store/         # store zustand
 │   │── App.jsx        # root component
 │   │── main.jsx       # entry point React
 │── package.json
@@ -34,14 +30,14 @@ frontend-lms/
 │── tailwind.config.js
 ```
 
----
+***
 
-## ⚙️ Cara Install & Menjalankan
+## ⚙️ Installation & Setup
 
-1. **Clone repo**
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/username/lms-frontend.git
-   cd lms-frontend
+   git clone https://github.com/HSI-Boarding-School/lms-client.git
+   cd lms-client
    ```
 
 2. **Install dependencies**
@@ -49,34 +45,36 @@ frontend-lms/
    bun install
    ```
 
-3. **Jalankan project**
+3. **Run the development server**
    ```bash
-   bun run dev
+   bun dev
    ```
 
-4. Buka di browser: [http://localhost:5173](http://localhost:5173)
+4. **Open your browser**  
+   [http://localhost:5173](http://localhost:5173)
 
+***
 
----
+## 🌟 Key Features
 
-## 🌟 Fitur Utama (Frontend)
+- ✅ Multi-role dashboards for **Students**, **Instructors**, and **Admins**  
+- ✅ Course Management (list, details, enrollment)  
+- ✅ Quizzes & Assignments user interface  
+- ✅ Modern responsive design for desktop and mobile devices  
+- ✅ Integration-ready with HSI’s internal API services  
 
-- ✅ Dashboard Student, Instructor, Admin
-- ✅ Manajemen Courses (list, detail, enroll)
-- ✅ Manajemen Quizzes & Assignments (UI saja dulu)
-- ✅ Responsive Design (desktop & mobile)
+***
 
----
+## 🏫 About the Project
 
-## 📌 Catatan
+Shiners LMS is designed to support digital learning and management activities within the **HSI Boarding School network** across Indonesia.  
 
-- Ini hanya bagian **Frontend**.  
-- Untuk API/Backend gunakan repo terpisah (misalnya dengan Node.js/Express/FastAPI).  
-- Pastikan setting `.env` sesuai dengan URL backend.
+It provides a centralized platform for educational materials, quizzes, and course progress tracking for both teachers and students.
 
----
+***
 
-## 👨‍💻 Author
+## 📌 Notes
 
-- Nama: **Muhammad Hamka**
-- Role: Frontend Developer
+- This repository contains the **frontend only**.  
+- The **backend/API service** should be implemented in a separate project (Go-lang).  
+- Ensure the `.env` file is configured with the correct backend base URL.  

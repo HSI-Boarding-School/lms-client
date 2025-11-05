@@ -3,7 +3,12 @@ export interface User {
   name: string;
   email: string;
   avatar: string;
-  role: 'student' | 'instructor' | 'admin';
+  role: 'STUDENT' | 'INSTRUCTOR' | 'ADMIN';
+  status: 'active' | 'inactive' | 'suspended';
+  joinDate: string;
+  lastLogin: string;
+  coursesEnrolled?: number;
+  coursesCreated?: number;
 }
 
 export interface Course {

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from './Card';
-import { cn } from '../../utils/cn';
+import React, { useEffect, useState } from "react";
+import { Card } from "./CardPrimary";
+import { cn } from "../../utils/cn";
 
 interface StatCardProps {
   title: string;
@@ -17,13 +17,13 @@ export const StatCard: React.FC<StatCardProps> = ({
   change,
   icon,
   className,
-  animated = true
+  animated = true,
 }) => {
   const [animatedValue, setAnimatedValue] = useState(0);
-  const numericValue = typeof value === 'number' ? value : 0;
+  const numericValue = typeof value === "number" ? value : 0;
 
   useEffect(() => {
-    if (animated && typeof value === 'number') {
+    if (animated && typeof value === "number") {
       let start = 0;
       const end = numericValue;
       const duration = 2000;
@@ -43,9 +43,10 @@ export const StatCard: React.FC<StatCardProps> = ({
     }
   }, [numericValue, animated]);
 
-  const displayValue = animated && typeof value === 'number' 
-    ? animatedValue.toLocaleString() 
-    : value;
+  const displayValue =
+    animated && typeof value === "number"
+      ? animatedValue.toLocaleString()
+      : value;
 
   return (
     <Card className={cn("p-6", className)}>
@@ -58,19 +59,18 @@ export const StatCard: React.FC<StatCardProps> = ({
             {displayValue}
           </p>
           {change !== undefined && (
-            <p className={cn(
-              "text-sm font-medium mt-1",
-              change >= 0 ? "text-green-600" : "text-red-600"
-            )}>
-              {change >= 0 ? '+' : ''}{change}%
+            <p
+              className={cn(
+                "text-sm font-medium mt-1",
+                change >= 0 ? "text-green-600" : "text-red-600"
+              )}
+            >
+              {change >= 0 ? "+" : ""}
+              {change}%
             </p>
           )}
         </div>
-        {icon && (
-          <div className="text-blue-600 dark:text-blue-400">
-            {icon}
-          </div>
-        )}
+        {icon && <div className="text-blue-600 dark:text-blue-400">{icon}</div>}
       </div>
     </Card>
   );
