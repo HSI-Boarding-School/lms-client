@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {z} from 'zod'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
@@ -24,8 +25,26 @@ export default function SignUpPage() {
   });
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [fieldError, setFieldError] = useState<Record<string, string[]>>({})
   const [isSucces, setIsSucces] = useState(false)
   const navigate = useNavigate()
+  const [submitted, isSubmitted] = useState(false)
+
+  const registerSchema = z
+  .object({
+    fullName: z.string().min(3, "Name must be at least 3 characters"),
+    email: z.string().email("Invalid email format"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(6, "Confirm password is required")
+  })
+  .refine(
+    (data) => data.password === data.confirmPassword,
+    {
+      message: "password do not match",
+      path: ["confirmPassword"],
+    }
+  )
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -36,18 +55,16 @@ export default function SignUpPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError("");
+    isSubmitted(true)
 
-    // validation
-    if (!formData.fullName || !formData.email || !formData.password) {
-      setError("Please fill in all fields")
+    const result = registerSchema.safeParse(formData)
+
+    if (!result.success) {
+      setFieldError(result.error.flatten().fieldErrors)
       return
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Password do not match")
-      return
-    }
+    setFieldError({})
 
     setIsLoading(true);
 
@@ -105,7 +122,7 @@ export default function SignUpPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onClick={handleRegister} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4">
             {/* Full Name */}
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name</Label>
@@ -118,6 +135,7 @@ export default function SignUpPage() {
                 onChange={handleChange}
                 className="h-11"
               />
+              {submitted && fieldError.fullName && <p className="text-red-500 text-sm">{fieldError.fullName[0]}</p>}
             </div>
 
             {/* Email */}
@@ -132,6 +150,8 @@ export default function SignUpPage() {
                 onChange={handleChange}
                 className="h-11"
               />
+              {submitted && fieldError.email && <p className="text-red-500 text-sm">{fieldError.email[0]}</p>}
+
             </div>
 
 
@@ -149,6 +169,7 @@ export default function SignUpPage() {
                   onChange={handleChange}
                   className="h-11 pr-10"
                 />
+                {submitted && fieldError.password && <p className="text-red-500 text-sm">{fieldError.password[0]}</p>}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -200,6 +221,7 @@ export default function SignUpPage() {
                   onChange={handleChange}
                   className="h-11 pr-10"
                 />
+                {fieldError.confirmPassword && <p className="text-red-500">{fieldError.confirmPassword[0]}</p>}
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}

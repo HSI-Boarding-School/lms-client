@@ -160,30 +160,16 @@ export const useAuthStore = create<AuthState>()(
                 useAuthStore.persist.clearStorage();
             },
 
-            getRole: (): string => {
-                const { user, isAuthenticated } = get();
-        
-                // Cek from state
-                if (isAuthenticated && user && user.roles && user.roles.length > 0) {
-                    return user.roles[0].name;
+            getRole: () => {
+                const token = localStorage.getItem('token')
+                if (!token) {
+                    throw new Error("Token is missing");
                     }
-        
-                // Fallback: check token in localStorage
-                const token = localStorage.getItem('token');
-        if (!token) {
-          console.warn('⚠️ No token found, returning default role: student');
-          return 'student'; // Return default,
-        }
+                const decoded = jwtDecode<TokenPayload>(token)
+                const userRole = decoded.roles?.[0]?.name || "student"
 
-        try {
-          const decoded = jwtDecode<TokenPayload>(token);
-          const userRole = decoded.roles?.[0]?.name || 'student';
-          return userRole;
-        } catch (error) {
-          console.error('❌ Failed to decode token:', error);
-          return 'student'; // Return default
-        }
-      },
+                return userRole;
+            },
 
             // check if user has a specific role(s)
             hasRole: (roles: string | string[]): boolean => {
