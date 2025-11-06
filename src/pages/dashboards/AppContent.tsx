@@ -17,7 +17,7 @@ function AppContent() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const setUserRole = useUserRoleStore((state) => state.setUserRole);
   const { data: user } = useUser();
-  const {getRole} = useAuthStore.getState()
+  const { getRole } = useAuthStore.getState();
 
   useEffect(() => {
     if (user) {
@@ -25,10 +25,10 @@ function AppContent() {
     }
   }, [user, setUserRole]);
 
-  const role = getRole()
+  const role = getRole();
   const renderDashboard = () => {
     switch (role) {
-      case "INSTRUCTOR":
+      case "TEACHER":
         return <InstructorDashboard />;
       case "ADMIN":
         return <AdminDashboard />;
@@ -37,9 +37,7 @@ function AppContent() {
     }
   };
 
-  console.log("decoded roles:", role   );
-
-
+  console.log("decoded roles:", role);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">

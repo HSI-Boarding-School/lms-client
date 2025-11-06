@@ -18,7 +18,7 @@ export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -32,7 +32,7 @@ export default function SignUpPage() {
 
   const registerSchema = z
   .object({
-    fullName: z.string().min(3, "Name must be at least 3 characters"),
+    name: z.string().min(3, "Name must be at least 3 characters"),
     email: z.string().email("Invalid email format"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string().min(6, "Confirm password is required")
@@ -70,9 +70,9 @@ export default function SignUpPage() {
 
     try {
       await authService.register({
+        name: formData.name,
         email: formData.email,
         password: formData.password,
-        username: formData.fullName
       })
 
       console.log("Registration succesfully!")
@@ -125,17 +125,17 @@ export default function SignUpPage() {
           <form onSubmit={handleRegister} className="space-y-4">
             {/* Full Name */}
             <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
+              <Label htmlFor="name">Full Name</Label>
               <Input
-                id="fullName"
-                name="fullName"
+                id="name"
+                name="name"
                 type="text"
                 placeholder="Enter your full name"
-                value={formData.fullName}
+                value={formData.name}
                 onChange={handleChange}
                 className="h-11"
               />
-              {submitted && fieldError.fullName && <p className="text-red-500 text-sm">{fieldError.fullName[0]}</p>}
+              {submitted && fieldError.name && <p className="text-red-500 text-sm">{fieldError.name[0]}</p>}
             </div>
 
             {/* Email */}
@@ -273,9 +273,10 @@ export default function SignUpPage() {
 
             <Button
               onClick={handleRegister}
+              disabled={isLoading}
               className="w-full h-11 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium shadow-lg"
             >
-              Create Account
+              {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
 
             <div className="relative my-6">

@@ -13,9 +13,7 @@ const api = axios.create({
 // Interceptor to add Authorization header to each request
 api.interceptors.request.use(
     (config) => {
-        // Get token from localStorage
         const token = localStorage.getItem('token');
-        // if token exists, add it to headers
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -26,42 +24,32 @@ api.interceptors.request.use(
     }
 );
 
-// Interceptor to handle error responses globally
-api.interceptors.response.use(
-    (response) => {
-        // if response is successful, return it
-        return response;
-    },
-    (error) => {
-        // If 401 Unauthorized, (token invalid/expired)
-        if(error.response?.status === 401) {
-            // delete token from localStorage
-            localStorage.removeItem('token');
-            // Redirect to login page
-            window.location.href = '/login';
-        }
-        return Promise.reject(error);
-    }
-)
-
+// ✅ SATU INTERCEPTOR SAJA - dengan logic yang lebih smart
 api.interceptors.response.use(
     (response) => {
         return response;
     },
     (error: AxiosError) => {
-        // expired token or invalid token
+        // Hanya handle 401 untuk request yang BUKAN login
         if (error.response?.status === 401) {
-            // clear storage
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            const isLoginRequest = error.config?.url?.includes('/auth/login');
+            
+            // ⭐ Jika bukan login request, baru redirect
+            if (!isLoginRequest) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                
+                // Cek apakah sudah di halaman login
+                if (!window.location.pathname.includes('/login')) {
+                    window.location.href = '/login';
+                }
+            }
+            // ⭐ Jika login request yang gagal, biarkan error di-throw
+            // Biar bisa di-catch di authService dan ditampilkan error message
         }
-
-        // redirect to login page (check if not already there)
-        if (!window.location.pathname.includes('/login')) {
-            window.location.href = '/login';
-        }
+        
+        return Promise.reject(error);
     }
-
 )
 
 export default api;

@@ -34,6 +34,9 @@ export const ProfilePage: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState("profile");
+  const {getRole} = useAuthStore()
+  const role = getRole()
+
 
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -151,7 +154,7 @@ export const ProfilePage: React.FC = () => {
               <div>
                 <h1 className="text-3xl font-bold mb-2">{userProfileData?.email}</h1>
                 <p className="text-xl opacity-90 font-bold mb-1 capitalize">
-                  {userProfileData?.roles.map(r => r.name).join(", ")}
+                  {role}
                 </p>
                 <p className="opacity-75">{formData.location}</p>
               </div>

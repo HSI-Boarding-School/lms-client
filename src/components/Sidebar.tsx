@@ -18,13 +18,12 @@ import { useAuthStore } from "@/store/authStore";
 import { Role } from "@/store/userStore";
 
 interface SidebarProps {
-  role: string
+  role: string;
   currentView: string;
   onViewChange: (view: string) => void;
   isCollapsed: boolean;
   onToggle: () => void;
 }
-
 
 const menuItems = {
   STUDENT: [
@@ -36,7 +35,7 @@ const menuItems = {
     { id: "certificates", label: "Certificates", icon: Certificate },
     { id: "profile", label: "Profile", icon: User },
   ],
-  INSTRUCTOR: [
+  TEACHER: [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "courses", label: "My Courses", icon: BookOpen },
     { id: "students", label: "Students", icon: Users },
@@ -53,14 +52,10 @@ const menuItems = {
   ],
 };
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  isCollapsed,
-  onToggle,
-}) => {
-  const {getRole} = useAuthStore.getState()
-  const role = getRole()
-  const items = menuItems[role as Role]
-  
+export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
+  const { getRole } = useAuthStore.getState();
+  const role = getRole();
+  const items = menuItems[role as Role];
 
   return (
     <>
@@ -85,7 +80,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="flex items-center gap-x-3">
               {!isCollapsed && (
                 <>
-                  <img src="../../public/logo.webp" className="h-10 w-10 object-contain" alt="" />
+                  <img
+                    src="../../public/logo.webp"
+                    className="h-10 w-10 object-contain"
+                    alt=""
+                  />
                   <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     HSI BS LMS
                   </h1>

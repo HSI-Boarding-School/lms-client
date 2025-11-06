@@ -3,8 +3,8 @@ export interface User {
   name: string;
   email: string;
   avatar: string;
-  role: 'STUDENT' | 'INSTRUCTOR' | 'ADMIN';
-  status: 'active' | 'inactive' | 'suspended';
+  role: "STUDENT" | "TEACHER" | "ADMIN";
+  status: "active" | "inactive" | "suspended";
   joinDate: string;
   lastLogin: string;
   coursesEnrolled?: number;
@@ -21,7 +21,7 @@ export interface Course {
   totalLessons: number;
   completedLessons: number;
   category: string;
-  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
   students: number;
   rating: number;
   duration: string;
@@ -32,13 +32,17 @@ export interface Assignment {
   title: string;
   course: string;
   dueDate: string;
-  status: 'pending' | 'submitted' | 'graded';
+  status: "pending" | "submitted" | "graded";
   grade?: number;
 }
 
 export interface Activity {
   id: string;
-  type: 'course_completed' | 'assignment_submitted' | 'quiz_taken' | 'certificate_earned';
+  type:
+    | "course_completed"
+    | "assignment_submitted"
+    | "quiz_taken"
+    | "certificate_earned";
   title: string;
   description: string;
   timestamp: string;
