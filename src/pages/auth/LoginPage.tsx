@@ -32,6 +32,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation()
     setLocalError('');
     clearError()
 
@@ -138,8 +139,6 @@ export default function LoginPage() {
             >
               {isLoading ? "Signing In..." : "Sign In"}
             </Button>
-
-            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">

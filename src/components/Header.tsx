@@ -17,13 +17,13 @@ import authService from "@/services/authService";
 export const Header: React.FC = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const { data: user } = useUser();
-  
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await authService.logout();
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 px-6 py-4">
@@ -38,7 +38,7 @@ export const Header: React.FC = () => {
             />
           </div>
         </div>
-<div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
           {/* {userRole === "ADMIN" as UserRole && (
         <DropdownMenu>
             <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-2xl py-2 px-3 shadow-xl border border-gray-200 dark:border-gray-700">
@@ -57,9 +57,9 @@ export const Header: React.FC = () => {
                   Student View
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => setUserRole("INSTRUCTOR")}
+                  onClick={() => setUserRole("TEACHER")}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer ${
-                    userRole === "INSTRUCTOR"
+                    userRole === "TEACHER"
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
@@ -81,7 +81,7 @@ export const Header: React.FC = () => {
           </DropdownMenu>
         )} */}
 
-        <Button variant="ghost" size="sm" onClick={toggleDarkMode}>
+          <Button variant="ghost" size="sm" onClick={toggleDarkMode}>
             {darkMode ? (
               <Sun className="h-5 w-5" />
             ) : (
@@ -113,14 +113,16 @@ export const Header: React.FC = () => {
                     Profile
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout} className="text-red-500 cursor-pointer">
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="text-red-500 cursor-pointer"
+                >
                   Log out <LogOut />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
-        
       </div>
     </header>
   );

@@ -5,16 +5,10 @@ import SignUpPage from "./pages/auth/SignUpPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import ForbiddenPage from "./pages/auth/ForbiddenPage";
-// import { useAuthStore } from "./store/authStore";
-// import { useEffect } from "react";
+import { QueryClient } from "@tanstack/react-query";
+const queryClient = new QueryClient()
 
 function App() {
-
-  // const loadUserFromStorage = useAuthStore((s) => s.loadUserFromStorage);
-
-  // useEffect(() => {
-  //   loadUserFromStorage();
-  // }, [loadUserFromStorage]);
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
