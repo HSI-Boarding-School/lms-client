@@ -6,13 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {z} from 'zod'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, CheckCircle2 } from "lucide-react";
-import { Link, useNavigate } from "react-router";
-import authService from "@/services/authService";
+import { Link } from "react-router";
+import { useRegister } from "@/hooks/useRegister";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,29 +22,8 @@ export default function SignUpPage() {
     password: "",
     confirmPassword: "",
   });
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [fieldError, setFieldError] = useState<Record<string, string[]>>({})
-  const [isSucces, setIsSucces] = useState(false)
-  const navigate = useNavigate()
-  const [submitted, isSubmitted] = useState(false)
-
-  const registerSchema = z
-  .object({
-    name: z.string().min(3, "Name must be at least 3 characters"),
-    email: z.string().email("Invalid email format"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string().min(6, "Confirm password is required")
-  })
-  .refine(
-    (data) => data.password === data.confirmPassword,
-    {
-      message: "password do not match",
-      path: ["confirmPassword"],
-    }
-  )
-
-
+  const [submitted, isSubmitted] = useState(false);
+  const {mutate: register, isPending} = useRegister() 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -54,43 +32,14 @@ export default function SignUpPage() {
   };
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     isSubmitted(true)
 
-    const result = registerSchema.safeParse(formData)
-
-    if (!result.success) {
-      setFieldError(result.error.flatten().fieldErrors)
-      return
-    }
-
-    setFieldError({})
-
-    setIsLoading(true);
-
-    try {
-      await authService.register({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      })
-
-      console.log("Registration succesfully!")
-
-      setIsSucces(true)
-
-      // redirect to login after 2 seconds
-      setTimeout(() => {
-        navigate("/login", {
-          state: {message: "Account created sucessfully! Please login"}
-        })
-      }, 2000);
-    } catch (err: any) {
-      console.error("Registration failed!", err.message)
-      setError(err.message || "Registration failed, please try again")
-    } finally {
-      setIsLoading(false)
-    }
+    register({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password
+    })
   };
 
   const passwordStrength = (password: string) => {
@@ -118,7 +67,7 @@ export default function SignUpPage() {
             Sign up to HSI BS LMS
           </CardTitle>
           <CardDescription className="text-center">
-            Create Account to start your learning 
+            Create Account to start your learning
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -135,7 +84,6 @@ export default function SignUpPage() {
                 onChange={handleChange}
                 className="h-11"
               />
-              {submitted && fieldError.name && <p className="text-red-500 text-sm">{fieldError.name[0]}</p>}
             </div>
 
             {/* Email */}
@@ -150,11 +98,7 @@ export default function SignUpPage() {
                 onChange={handleChange}
                 className="h-11"
               />
-              {submitted && fieldError.email && <p className="text-red-500 text-sm">{fieldError.email[0]}</p>}
-
             </div>
-
-
 
             {/* Password */}
             <div className="space-y-2">
@@ -169,7 +113,6 @@ export default function SignUpPage() {
                   onChange={handleChange}
                   className="h-11 pr-10"
                 />
-                {submitted && fieldError.password && <p className="text-red-500 text-sm">{fieldError.password[0]}</p>}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -221,7 +164,7 @@ export default function SignUpPage() {
                   onChange={handleChange}
                   className="h-11 pr-10"
                 />
-                {fieldError.confirmPassword && <p className="text-red-500">{fieldError.confirmPassword[0]}</p>}
+
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -273,10 +216,10 @@ export default function SignUpPage() {
 
             <Button
               onClick={handleRegister}
-              disabled={isLoading}
+              disabled={isPending}
               className="w-full h-11 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium shadow-lg"
             >
-              {isLoading ? "Creating Account..." : "Create Account"}
+              {isPending ? "Creating Account..." : "Create Account"}
             </Button>
 
             <div className="relative my-6">
