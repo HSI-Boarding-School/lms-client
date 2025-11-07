@@ -30,6 +30,9 @@ api.interceptors.response.use(
         return response;
     },
     (error: AxiosError) => {
+        
+        const message = (error.response?.data as any)?.message || error.message || "Unknown error"
+
         // Hanya handle 401 untuk request yang BUKAN login
         if (error.response?.status === 401) {
             const isLoginRequest = error.config?.url?.includes('/auth/login');
@@ -44,11 +47,9 @@ api.interceptors.response.use(
                     window.location.href = '/login';
                 }
             }
-            // ⭐ Jika login request yang gagal, biarkan error di-throw
-            // Biar bisa di-catch di authService dan ditampilkan error message
         }
         
-        return Promise.reject(error);
+        return Promise.reject({...error, message});
     }
 )
 

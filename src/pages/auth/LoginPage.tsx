@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "@/store/authStore";
+import { useLogin } from "@/hooks/useLogin";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +21,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login, isLoading, error, clearError} = useAuthStore()
+  const loginMutation = useLogin()
 
 
   // clear error when components unmount 
@@ -32,17 +34,13 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    e.stopPropagation()
-    setLocalError('');
-    clearError()
 
-    try {
-      await login({email, password})
-      // if succes, redirect to dashboard
-      navigate('/dashboard')
-    } catch (err) {
-      console.error("Login failed", err)
-    }
+    loginMutation.mutate(
+      {email, password},
+      {
+        onSuccess: () => navigate("/dashboard"),
+      }
+    )
   }
 
   const displayError = localError || error

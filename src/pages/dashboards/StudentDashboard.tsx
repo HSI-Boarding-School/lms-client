@@ -12,10 +12,10 @@ import {
   Trophy,
   Target,
 } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export const StudentDashboard: React.FC = () => {
-  const { user } = useAuthStore();
+  const {data: user} = useCurrentUser()
   const { data: courses, isLoading: coursesLoading } = useCourses();
   const { data: activities, isLoading: activitiesLoading } = useActivities();
 
@@ -38,7 +38,7 @@ export const StudentDashboard: React.FC = () => {
       <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 rounded-3xl p-8 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.1%22%3E%3Ccircle cx=%227%22 cy=%227%22 r=%227%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30" />
         <div className="relative z-10">
-          <h1 className="text-4xl font-bold mb-4">Welcome back, {user?.email}! 🎓</h1>
+          <h1 className="text-4xl font-bold mb-4">Welcome back, {user?.name}! 🎓</h1>
           <p className="text-xl opacity-90 mb-6">
             Continue your learning journey and achieve your goals
           </p>
