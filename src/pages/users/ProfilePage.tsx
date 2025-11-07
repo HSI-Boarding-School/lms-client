@@ -152,7 +152,7 @@ export const ProfilePage: React.FC = () => {
                 </button>
               </div>
               <div>
-                <h1 className="text-3xl font-bold mb-2">{userProfileData?.email}</h1>
+                <h1 className="text-3xl font-bold mb-2">{userProfileData?.name}</h1>
                 <p className="text-xl opacity-90 font-bold mb-1 capitalize">
                   {role}
                 </p>

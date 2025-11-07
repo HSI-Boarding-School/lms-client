@@ -5,11 +5,12 @@ import SignUpPage from "./pages/auth/SignUpPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import ForbiddenPage from "./pages/auth/ForbiddenPage";
-import { QueryClient } from "@tanstack/react-query";
-const queryClient = new QueryClient()
+import { Toaster } from "sonner";
 
 function App() {
   return (
+    <>
+    <Toaster position="top-center"></Toaster>
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignUpPage />} />
@@ -20,6 +21,7 @@ function App() {
 
       <Route path="/*" element={<AppContent />} />
     </Routes>
+    </>
   );
 }
 
