@@ -26,9 +26,9 @@ import {
 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuthStore } from "@/store/authStore";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export const ProfilePage: React.FC = () => {
-  const {user: userProfileData} = useAuthStore();
   const { data: user } = useUser();
   const { darkMode, toggleDarkMode } = useTheme();
   const [isEditing, setIsEditing] = useState(false);
@@ -36,6 +36,7 @@ export const ProfilePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const {getRole} = useAuthStore()
   const role = getRole()
+  const {data: userProfile} = useCurrentUser()
 
 
   const [formData, setFormData] = useState({
@@ -152,7 +153,7 @@ export const ProfilePage: React.FC = () => {
                 </button>
               </div>
               <div>
-                <h1 className="text-3xl font-bold mb-2">{userProfileData?.name}</h1>
+                <h1 className="text-3xl font-bold mb-2">{userProfile?.name}</h1>
                 <p className="text-xl opacity-90 font-bold mb-1 capitalize">
                   {role}
                 </p>
